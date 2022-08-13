@@ -22,6 +22,7 @@
   "homepage": "https://github.com/DeviousDoge/team-profile-generator#readme",
   "dependencies": {
     "inquire": "^0.4.8",
+    "inquirer": "8.2.4",
     "jest": "^28.1.3"
   }
 }
