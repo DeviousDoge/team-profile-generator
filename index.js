@@ -10,6 +10,78 @@ function init() {
     const Manager = require("./lib/Manager.js");
     const generateHTML = require("./src/generateHTML.js");
     //prompt chain
+    const addEmployee = () => {return inquirer 
+        
+        .prompt ([
+        {
+            type: "confirm",
+            name: "addAnotherEmployee",
+            message: "Add another employee?",
+        }, {
+            when: response => {
+              return response.addAnotherEmployee == true
+            },
+            
+            type: "input",
+            name: "employeeName",
+            message: "What is the employees name?"
+        }, {
+            when: response => {
+              return response.addAnotherEmployee == true
+            },
+            
+            type: "input",
+            name: "employeeID",
+            message: "What is the employees ID"
+        }, {
+            when: response => {
+              return response.addAnotherEmployee == true
+            },
+
+            type: "input",
+            name: "employeeEmail",
+            message: "What is the employees email?"
+        }, 
+    
+    ])
+    .then(function(employee) {
+        if (employee.addAnotherEmployee) {
+        const employeeQuestion = require("inquirer").prompt([
+            {
+                type: "list",
+                name: "employeeTitle",
+                message: "What's the employee's title",
+                choices: ["Engineer", "Intern"]
+    
+            },
+            //when role is engineer is true, ask this question
+            {
+                when: input => {
+                    return input.employeeTitle == "Engineer"
+                },
+                type: "input",
+                name: "github",
+                message: "Enter your github username:",
+            },
+            //when role is intern is true, ask this question
+            {
+                when: input => {
+                    return input.employeeTitle == "Intern"
+                },
+                type: "input",
+                name: "school",
+                message: "What's the school you enrolled in ?",
+            },
+        
+        ]).then(response => {
+            console.log(response)
+            addEmployee()
+        })
+        
+    }})
+    // addEmployee;
+    console.log(answers)
+}
     inquirer
         .prompt([
             {
@@ -28,85 +100,8 @@ function init() {
                 name: "mgrEmail"
             }
 
-        ]
-        )
-        .then(function (answers) {
-            const addEmployee =  inquirer.prompt ([
-                {
-                    type: "confirm",
-                    name: "addAnotherEmployee",
-                    message: "Add another employee?",
-                }, {
-                    when: response => {
-                      return response.addAnotherEmployee == true
-                    },
-                    
-                    type: "input",
-                    name: "employeeName",
-                    message: "What is the employees name?"
-                }, {
-                    when: response => {
-                      return response.addAnotherEmployee == true
-                    },
-                    
-                    type: "input",
-                    name: "employeeID",
-                    message: "What is the employees ID"
-                }, {
-                    when: response => {
-                      return response.addAnotherEmployee == true
-                    },
-
-                    type: "input",
-                    name: "employeeEmail",
-                    message: "What is the employees email?"
-                }, 
-            
-            ])
-            .then(function(employee) {
-                if (employee.addAnotherEmployee) {
-                const employeeQuestion = require("inquirer").prompt([
-                    {
-                        type: "list",
-                        name: "employeeTitle",
-                        message: "What's the employee's title",
-                        choices: ["Engineer", "Intern"]
-            
-                    },
-                    //when role is engineer is true, ask this question
-                    {
-                        when: input => {
-                            return input.employeeTitle == "Engineer"
-                        },
-                        type: "input",
-                        name: "github",
-                        message: "Enter your github username:",
-                    },
-                    //when role is intern is true, ask this question
-                    {
-                        when: input => {
-                            return input.employeeTitle == "Intern"
-                        },
-                        type: "input",
-                        name: "school",
-                        message: "What's the school you enrolled in ?",
-                    },
-                
-                ])
-                .then(function() {
-                    return addEmployee
-                }
-
-                )
-            }
-         
-            }
-
-            )
-            addEmployee;
-            console.log(answers)
-        }
-        )
+        ])
+        .then(function (answers) {addEmployee()})
 }
 //initialize app
 init();
