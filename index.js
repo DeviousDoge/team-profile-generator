@@ -20,9 +20,10 @@ const writeFile = data => {
         }
     })
 };
-
+//array containing objects constructed via userInput
 const team = [];
 //prompt chain
+//initial prompt
 const addManager = () => {
     return inquirer
         .prompt([
@@ -49,12 +50,13 @@ const addManager = () => {
 
         ])
         .then(function (answers) {
+            //create a manager object using userinputs and the Manager Constructor
             const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+            //add it to the team array
             team.push(manager);
-            // console.log(manager);
-            console.log(team);
         })
 };
+//every subsequent prompt
 const addEmployee = () => {
     return inquirer
 
@@ -98,7 +100,7 @@ const addEmployee = () => {
                 choices: ["Engineer", "Intern"]
 
             },
-            //when role is engineer is true, ask this question
+            //when role is engineer, ask this question
             {
                 when: input => {
                     return input.employeeTitle == "Engineer"
@@ -107,7 +109,7 @@ const addEmployee = () => {
                 name: "github",
                 message: "Enter your github username:",
             },
-            //when role is intern is true, ask this question
+            //when role is intern, ask this question
             {
                 when: input => {
                     return input.employeeTitle == "Intern"
@@ -119,22 +121,19 @@ const addEmployee = () => {
 
         ]).then(answers => {
             let employee
-
+            //create an engineer/intern object depending on users selection. Add it to the team array. Otherwise log "No more employees!"
             if (answers.employeeTitle === "Engineer") {
                 employee = new Engineer(answers.name, answers.id, answers.email, answers.github);
                 team.push(employee);
-                // console.log(employee);
                 console.log(team);
             } else if (answers.employeeTitle === "Intern") {
                 employee = new Intern(answers.name, answers.id, answers.email, answers.school);
                 team.push(employee);
-                // console.log(employee);
                 console.log(team);
             } else {
                 console.log("No more employees!");
-                console.log(team);
             }
-
+            //if the user answered yes to add another employee, ask them the question again, repeating the chain until the user says no. 
             if (answers.addAnotherEmployee == true) {
                return addEmployee()
             } else {
@@ -143,7 +142,7 @@ const addEmployee = () => {
         })
 };
 
-
+//run the manager prompt, then run the employee prompt until user is done, then generate the contents of the HTML file depending on the users selected team, then write the file.
 addManager()
     .then(addEmployee)
     .then(team => {

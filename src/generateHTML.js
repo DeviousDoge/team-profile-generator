@@ -1,9 +1,6 @@
-const Manager = require("../lib/Manager");
-const Engineer = require("../lib/Engineer");
-const Intern = require("../lib/Intern");
-
+//this is the function that translates the users inputs to the prompts in index.js into HTML format.
 generateHTML = (data) => {
-
+    //Card generated for the first employee
     const managerCard = (manager) => {
         return `<div class="card" style="width: 18rem;">
         <div class="card-header">
@@ -17,7 +14,7 @@ generateHTML = (data) => {
          </div>
         `
     }
-
+    //card generated for an employee the user chose as engineer.
     const engineerCard = (engineer) => {
         return `<div class="card" style="width: 18rem;">
         <div class="card-header">
@@ -32,7 +29,7 @@ generateHTML = (data) => {
          `
     }
 
-
+    //card generated for employee the user chose as intern. 
     const internCard = (intern) => {
         return `<div class="card" style="width: 18rem;">
         <div class="card-header">
@@ -49,9 +46,9 @@ generateHTML = (data) => {
 
 
 
-
+    //array to put the HTML card into the main div.
     employeeCards = [];
-
+    //loop through the team array from index.html, checking for role and assigning each employee there special card class, putting each employee into the next array one at a time. 
     for (let i = 0; i < data.length; i++) {
         const employee = data[i];
         const role = employee.getRole();
@@ -70,7 +67,7 @@ generateHTML = (data) => {
 
     }
 
-
+   //create the skeleton of the HTML file and put all the cards into the main div. 
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -86,7 +83,11 @@ generateHTML = (data) => {
             <h1 id="navbar-text">Our Team!</h1>
         </header>
         <main>
+          <div class="container">
+               <div class="row justify-content-center">
             ${employeeCards.join('')}
+            </div>
+            </div>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     </body>
