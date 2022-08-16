@@ -1,4 +1,4 @@
-# Team Profile Generator This Project is Unlicensed.
+# Team Profile Generator
   ## Table of Contents:
   1. [Description](#description) 
   2. [Installation](#installation)
